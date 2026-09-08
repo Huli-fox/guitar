@@ -1,4 +1,5 @@
 import os, time
+import json
 import importlib
 from collections import namedtuple
 
@@ -32,6 +33,19 @@ parser.add_argument("--left", type=str, default=None,
 parser.add_argument("--right", type=str, default=None, 
     help="Checkpoint directory or file for right-hand policy training or evaluation.")
 
+parser.add_argument("--headless", action="store_true", default=False,
+    help="Run evaluation without creating an Isaac Gym viewer (for headless machines).")
+parser.add_argument("--graphics-device", type=int, default=None,
+    help="Graphics device ID passed to gym.create_sim. Use -1 to disable the "
+         "graphics context entirely (recommended on headless machines). "
+         "Defaults to -1 when --headless is set, otherwise same as --device.")
+parser.add_argument("--record", type=str, default=None,
+    help="Save rigid body states of env 0 to this JSON file during test. "
+         "Defaults to recordings/left_hand_motion.json when --headless is set.")
+parser.add_argument("--max-steps", type=int, default=None,
+    help="Number of simulation steps to run during test. "
+         "Defaults to 600 when --headless is set; otherwise runs until the viewer is closed.")
+
 settings = parser.parse_args()
 
 TRAINING_PARAMS = dict(
@@ -51,15 +65,152 @@ TRAINING_PARAMS = dict(
     control_mode = "position",
 )
 
-def test(env, model):
+LEFT_HAND_LINKS = [
+    "LH:wrist",
+
+    "LH:thumb1",
+    "LH:thumb2",
+    "LH:thumb3",
+
+    "LH:index1",
+    "LH:index2",
+    "LH:index3",
+
+    "LH:middle1",
+    "LH:middle2",
+    "LH:middle3",
+
+    "LH:ring1",
+    "LH:ring2",
+    "LH:ring3",
+
+    "LH:pinky1",
+    "LH:pinky2",
+    "LH:pinky3",
+]
+
+
+class MotionRecorder:
+    """Record per-frame world position/quaternion of rigid bodies of env 0.
+
+    Output JSON layout:
+    {
+        "fps": <env.fps>,
+        "num_frames": N,
+        "quaternion_order": "xyzw",   # Isaac Gym convention
+        "up_axis": "z",
+        "links": ["LH:wrist", ...],
+        "frames": [
+            {
+                "frame": 0,
+                "time": 0.0,
+                "reset": false,       # True if any env was done at this frame
+                "links": {
+                    "LH:wrist": {"position": [x, y, z], "quaternion": [x, y, z, w]},
+                    ...
+                }
+            },
+            ...
+        ]
+    }
+    """
+
+    def __init__(self, env, output_path, link_names=None):
+        self.env = env
+        self.output_path = output_path
+        self.frames = []
+        self.env_id = 0
+        self.link_names = LEFT_HAND_LINKS if link_names is None else list(link_names)
+
+        os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+
+        # Print all rigid body names of every character actor so that the body
+        # indices used for recording can be verified (see left_hand.md section 5).
+        for actor in env.actors:
+            bodies = env.gym.get_actor_rigid_body_dict(env.envs[0], actor)
+            print("RigidBody", sorted(bodies.items(), key=lambda x: x[1]), len(bodies))
+
+        self.link_ids = {}
+        for link_name in self.link_names:
+            # Search the link across all actors (LH/RH live in separate actors
+            # for the two-hands environment).
+            link_id = -1
+            for actor in env.actors:
+                lid = env.gym.find_actor_rigid_body_handle(env.envs[0], actor, link_name)
+                if lid != -1:
+                    link_id = lid
+                    break
+            if link_id < 0:
+                raise RuntimeError("Cannot find rigid body: {}".format(link_name))
+            self.link_ids[link_name] = link_id
+
+        self.fps = env.fps
+        print("MotionRecorder: fps={}, links={}".format(self.fps, len(self.link_ids)))
+
+    def capture(self, frame_id, env):
+        env.refresh_tensors()
+
+        state = env.link_tensor[self.env_id]
+
+        links = {}
+        for link_name, link_id in self.link_ids.items():
+            position = state[link_id, 0:3].detach().cpu().tolist()
+            quaternion = state[link_id, 3:7].detach().cpu().tolist()
+            # Isaac Gym rigid body state layout: pos(3) + quat xyzw(4) + ...
+            links[link_name] = {
+                "position": position,
+                "quaternion": quaternion,
+            }
+
+        self.frames.append({
+            "frame": frame_id,
+            "time": frame_id / self.fps,
+            "reset": False,
+            "links": links,
+        })
+
+    def mark_reset(self, frame_id):
+        if self.frames and self.frames[-1]["frame"] == frame_id:
+            self.frames[-1]["reset"] = True
+
+    def close(self):
+        up_axis = "z" if getattr(self.env, "UP_AXIS", 2) == 2 else "y"
+        output = {
+            "fps": self.fps,
+            "num_frames": len(self.frames),
+            "quaternion_order": "xyzw",
+            "up_axis": up_axis,
+            "links": list(self.link_names),
+            "frames": self.frames,
+        }
+
+        with open(self.output_path, "w", encoding="utf-8") as handle:
+            json.dump(output, handle)
+
+        print("Saved {} frames ({} links) to {}".format(
+            len(self.frames), len(self.link_ids), self.output_path))
+
+
+def test(env, model, record_path=None, max_steps=None, record_links=None):
     model.eval()
     env.eval()
     env.reset()
+
+    recorder = None
+    if record_path is not None:
+        recorder = MotionRecorder(env, record_path, link_names=record_links)
+
     accuracy_l, precision_l, recall_l, f1_l = [], [], [], []
     accuracy_r, precision_r, recall_r, f1_r = [], [], [], []
     new = True
     nn = 0
+    step_id = 0
     while not env.request_quit:
+        # Headless runs have no viewer, so request_quit never becomes True.
+        # Stop after a fixed number of steps instead (see left_hand.md section 3).
+        if max_steps is not None and step_id >= max_steps:
+            break
+
         obs, info = env.reset_done()
         if new:
             nn += 1
@@ -71,6 +222,13 @@ def test(env, model):
         seq_len = info["ob_seq_lens"]
         actions = model.act(obs, seq_len-1)
         obs_, rews, dones, info = env.step(actions)
+
+        if recorder is not None:
+            recorder.capture(step_id, env)
+            if torch.any(dones):
+                print("done at step", step_id)
+                recorder.mark_reset(step_id)
+
         if "precision_l" in info and info["precision_l"].numel() > 0:
             accuracy_l.extend(info["accuracy_l"].cpu().tolist())
             precision_l.extend(info["precision_l"].cpu().tolist())
@@ -83,6 +241,11 @@ def test(env, model):
             recall_r.extend(info["recall_r"].cpu().tolist())
             # f1_l.extend(info["f1"].cpu().tolist())
             new = True
+
+        step_id += 1
+
+    if recorder is not None:
+        recorder.close()
 
 
 def train(env, model, ckpt_dir, training_params):
@@ -440,9 +603,14 @@ if __name__ == "__main__":
         if settings.test:
             config.env_params["random_note_sampling"] = False
 
+    graphics_device = settings.graphics_device
+    if graphics_device is None:
+        graphics_device = -1 if settings.headless else settings.device
+
     env = env_cls(num_envs,
         discriminators=discriminators,
         compute_device=settings.device,
+        graphics_device=graphics_device,
         **config.env_params
     )
     value_dim = len(env.discriminators)+env.rew_dim
@@ -549,8 +717,26 @@ if __name__ == "__main__":
                 print("Load model from {}".format(ckpt))
                 state_dict = torch.load(ckpt, map_location=torch.device(settings.device))
                 model.load_state_dict(state_dict["model"], strict=False)
-        env.render()
-        test(env, model)
+
+        # Headless machines cannot create an Isaac Gym viewer; physics and
+        # rigid body state tensors still work without it.
+        if not settings.headless:
+            env.render()
+
+        record_path = settings.record
+        if record_path is None and settings.headless:
+            record_path = "recordings/left_hand_motion.json"
+
+        max_steps = settings.max_steps
+        if max_steps is None and settings.headless:
+            max_steps = 600
+
+        # Rigid bodies to record: taken from the config so that both single-
+        # hand (16 LH links) and two-hands (32 LH+RH links) setups work.
+        record_links = config.env_params.get("key_links")
+
+        test(env, model, record_path=record_path, max_steps=max_steps,
+            record_links=record_links)
     else:
         train(env, model, settings.ckpt, training_params)
 
