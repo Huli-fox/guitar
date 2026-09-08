@@ -34,6 +34,7 @@ Optional arguments:
 
 import json
 import sys
+import math
 
 import bpy
 from mathutils import Vector, Quaternion
@@ -88,6 +89,138 @@ def get_empty(name, empties, scale):
         empties[name] = obj
     return obj
 
+def preview_edges(names):
+    edges = []
+
+    for hand in ("LH", "RH"):
+        for finger in ("thumb", "index", "middle", "ring", "pinky"):
+            chain = [hand + ":wrist"] + [
+                "{}:{}{}".format(hand, finger, joint)
+                for joint in (1, 2, 3)
+            ]
+
+            for start, end in zip(chain, chain[1:]):
+                if start in names and end in names:
+                    edges.append((start, end))
+
+    return edges
+
+
+def create_preview(empties, scale=1.0):
+    radius = 0.003 * abs(scale)
+    scene = bpy.context.scene
+
+    collection = bpy.data.collections.new("MotionPreview")
+    scene.collection.children.link(collection)
+
+    materials = {}
+
+    for hand, color in (
+        ("LH", (0.1, 0.45, 1.0, 1.0)),
+        ("RH", (1.0, 0.35, 0.08, 1.0)),
+    ):
+        material = bpy.data.materials.new("MotionPreview_" + hand)
+        material.diffuse_color = color
+        materials[hand] = material
+
+    def mesh_object(name, vertices, faces, hand):
+        mesh = bpy.data.meshes.new(name)
+        mesh.from_pydata(vertices, [], faces)
+        mesh.update()
+
+        obj = bpy.data.objects.new(name, mesh)
+        collection.objects.link(obj)
+
+        material = materials.get(hand, materials["LH"])
+        mesh.materials.append(material)
+        obj.color = material.diffuse_color
+
+        return obj
+
+    for name, target in empties.items():
+        vertices = [
+            (radius, 0, 0),
+            (-radius, 0, 0),
+            (0, radius, 0),
+            (0, -radius, 0),
+            (0, 0, radius),
+            (0, 0, -radius),
+        ]
+
+        faces = [
+            (0, 2, 4),
+            (2, 1, 4),
+            (1, 3, 4),
+            (3, 0, 4),
+            (2, 0, 5),
+            (1, 2, 5),
+            (3, 1, 5),
+            (0, 3, 5),
+        ]
+
+        marker = mesh_object(
+            "Joint_" + name,
+            vertices,
+            faces,
+            name[:2],
+        )
+        marker.parent = target
+
+    edges = preview_edges(empties)
+
+    for start, end in edges:
+        vertices = [
+            (
+                radius * 0.4 * math.cos(index * math.tau / 8),
+                height,
+                radius * 0.4 * math.sin(index * math.tau / 8),
+            )
+            for height in (0.0, 1.0)
+            for index in range(8)
+        ]
+
+        faces = [
+            (
+                index,
+                (index + 1) % 8,
+                (index + 1) % 8 + 8,
+                index + 8,
+            )
+            for index in range(8)
+        ]
+
+        connector = mesh_object(
+            "Link_" + start + "_" + end,
+            vertices,
+            faces,
+            start[:2],
+        )
+
+        location = connector.constraints.new("COPY_LOCATION")
+        location.target = empties[start]
+
+        stretch = connector.constraints.new("STRETCH_TO")
+        stretch.target = empties[end]
+        stretch.rest_length = 1.0
+        stretch.volume = "NO_VOLUME"
+
+    for screen in bpy.data.screens:
+        for area in screen.areas:
+            if area.type == "VIEW_3D":
+                area.spaces.active.shading.color_type = "MATERIAL"
+
+    scene.frame_set(scene.frame_start)
+
+    for obj in bpy.context.selected_objects:
+        obj.select_set(False)
+
+    for obj in collection.objects:
+        obj.select_set(True)
+
+    print(
+        "Preview created: {} markers, {} connectors; "
+        "LH=blue, RH=orange".format(len(empties), len(edges))
+    )
 
 def import_motion(path, scale=1.0, offset=(0.0, 0.0, 0.0)):
     data = load_motion(path)
@@ -132,8 +265,16 @@ def import_motion(path, scale=1.0, offset=(0.0, 0.0, 0.0)):
     print("Timeline: frames {} - {} ({} s)".format(
         scene.frame_start, scene.frame_end,
         (scene.frame_end - scene.frame_start + 1) / fps))
+    return empties
 
 
 if __name__ == "__main__":
     motion_file, scale, offset = parse_args()
-    import_motion(motion_file, scale=scale, offset=offset)
+
+    empties = import_motion(
+        motion_file,
+        scale=scale,
+        offset=offset,
+    )
+
+    create_preview(empties, scale=scale)

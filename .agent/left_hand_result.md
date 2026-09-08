@@ -31,7 +31,6 @@ python main.py cfg/two_demo.py \
 ```
 
 Blender 侧导入：
-```bash
-blender --background --python tools/import_motion.py -- recordings/left_hand_motion.json
-```
+
+从根目录执行 `blender --python tools/import_motion.py -- recordings/left_hand_motion.json` ，可观察到：蓝色左手、橙色右手；每个录制节点一个小关节点；手腕到各指根、各指节之间的动态连线。
 播放检查无跳变后，即可进行网格与角色重定向。若后续自己训练了左手单手策略，用 `cfg/left_demo.py --ckpt <左手ckpt>` 同样可直接录制（节点列表自动从配置读取）。
