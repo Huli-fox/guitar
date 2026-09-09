@@ -1,0 +1,162 @@
+[
+  {
+    "source_node": "LH:wrist",
+    "source_bone": "mixamorig:LeftHand",
+    "target_arp_fk": "c_hand_fk.l"
+  },
+  {
+    "source_node": "LH:thumb1",
+    "source_bone": "mixamorig:LeftHandThumb1",
+    "target_arp_fk": "c_thumb1.l"
+  },
+  {
+    "source_node": "LH:thumb2",
+    "source_bone": "mixamorig:LeftHandThumb2",
+    "target_arp_fk": "c_thumb2.l"
+  },
+  {
+    "source_node": "LH:thumb3",
+    "source_bone": "mixamorig:LeftHandThumb3",
+    "target_arp_fk": "c_thumb3.l"
+  },
+  {
+    "source_node": "LH:index1",
+    "source_bone": "mixamorig:LeftHandIndex1",
+    "target_arp_fk": "c_index1.l"
+  },
+  {
+    "source_node": "LH:index2",
+    "source_bone": "mixamorig:LeftHandIndex2",
+    "target_arp_fk": "c_index2.l"
+  },
+  {
+    "source_node": "LH:index3",
+    "source_bone": "mixamorig:LeftHandIndex3",
+    "target_arp_fk": "c_index3.l"
+  },
+  {
+    "source_node": "LH:middle1",
+    "source_bone": "mixamorig:LeftHandMiddle1",
+    "target_arp_fk": "c_middle1.l"
+  },
+  {
+    "source_node": "LH:middle2",
+    "source_bone": "mixamorig:LeftHandMiddle2",
+    "target_arp_fk": "c_middle2.l"
+  },
+  {
+    "source_node": "LH:middle3",
+    "source_bone": "mixamorig:LeftHandMiddle3",
+    "target_arp_fk": "c_middle3.l"
+  },
+  {
+    "source_node": "LH:ring1",
+    "source_bone": "mixamorig:LeftHandRing1",
+    "target_arp_fk": "c_ring1.l"
+  },
+  {
+    "source_node": "LH:ring2",
+    "source_bone": "mixamorig:LeftHandRing2",
+    "target_arp_fk": "c_ring2.l"
+  },
+  {
+    "source_node": "LH:ring3",
+    "source_bone": "mixamorig:LeftHandRing3",
+    "target_arp_fk": "c_ring3.l"
+  },
+  {
+    "source_node": "LH:pinky1",
+    "source_bone": "mixamorig:LeftHandPinky1",
+    "target_arp_fk": "c_pinky1.l"
+  },
+  {
+    "source_node": "LH:pinky2",
+    "source_bone": "mixamorig:LeftHandPinky2",
+    "target_arp_fk": "c_pinky2.l"
+  },
+  {
+    "source_node": "LH:pinky3",
+    "source_bone": "mixamorig:LeftHandPinky3",
+    "target_arp_fk": "c_pinky3.l"
+  },
+  {
+    "source_node": "RH:wrist",
+    "source_bone": "mixamorig:RightHand",
+    "target_arp_fk": "c_hand_fk.r"
+  },
+  {
+    "source_node": "RH:thumb1",
+    "source_bone": "mixamorig:RightHandThumb1",
+    "target_arp_fk": "c_thumb1.r"
+  },
+  {
+    "source_node": "RH:thumb2",
+    "source_bone": "mixamorig:RightHandThumb2",
+    "target_arp_fk": "c_thumb2.r"
+  },
+  {
+    "source_node": "RH:thumb3",
+    "source_bone": "mixamorig:RightHandThumb3",
+    "target_arp_fk": "c_thumb3.r"
+  },
+  {
+    "source_node": "RH:index1",
+    "source_bone": "mixamorig:RightHandIndex1",
+    "target_arp_fk": "c_index1.r"
+  },
+  {
+    "source_node": "RH:index2",
+    "source_bone": "mixamorig:RightHandIndex2",
+    "target_arp_fk": "c_index2.r"
+  },
+  {
+    "source_node": "RH:index3",
+    "source_bone": "mixamorig:RightHandIndex3",
+    "target_arp_fk": "c_index3.r"
+  },
+  {
+    "source_node": "RH:middle1",
+    "source_bone": "mixamorig:RightHandMiddle1",
+    "target_arp_fk": "c_middle1.r"
+  },
+  {
+    "source_node": "RH:middle2",
+    "source_bone": "mixamorig:RightHandMiddle2",
+    "target_arp_fk": "c_middle2.r"
+  },
+  {
+    "source_node": "RH:middle3",
+    "source_bone": "mixamorig:RightHandMiddle3",
+    "target_arp_fk": "c_middle3.r"
+  },
+  {
+    "source_node": "RH:ring1",
+    "source_bone": "mixamorig:RightHandRing1",
+    "target_arp_fk": "c_ring1.r"
+  },
+  {
+    "source_node": "RH:ring2",
+    "source_bone": "mixamorig:RightHandRing2",
+    "target_arp_fk": "c_ring2.r"
+  },
+  {
+    "source_node": "RH:ring3",
+    "source_bone": "mixamorig:RightHandRing3",
+    "target_arp_fk": "c_ring3.r"
+  },
+  {
+    "source_node": "RH:pinky1",
+    "source_bone": "mixamorig:RightHandPinky1",
+    "target_arp_fk": "c_pinky1.r"
+  },
+  {
+    "source_node": "RH:pinky2",
+    "source_bone": "mixamorig:RightHandPinky2",
+    "target_arp_fk": "c_pinky2.r"
+  },
+  {
+    "source_node": "RH:pinky3",
+    "source_bone": "mixamorig:RightHandPinky3",
+    "target_arp_fk": "c_pinky3.r"
+  }
+]

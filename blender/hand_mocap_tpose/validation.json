@@ -1,0 +1,24 @@
+{
+  "baked_vs_source": {
+    "frames_checked": 600,
+    "max_position_error_m": 2.086848473240445e-07,
+    "max_matrix_component_error": 5.364418029785156e-07
+  },
+  "bone_count": 52,
+  "fps": 60.0,
+  "frame_range": [
+    0,
+    599
+  ],
+  "rest_pose_source_frame": null,
+  "standard": "Mixamo names; synthetic T-pose body and MJCF zero-joint hands",
+  "root_bone": "mixamorig:Hips",
+  "measured_bones": 32,
+  "synthetic_bones": 20,
+  "max_synthetic_arm_stretch": 1.0,
+  "fbx_roundtrip_vs_source": {
+    "frames_checked": 600,
+    "max_position_error_m": 8.54131972981341e-07,
+    "max_matrix_component_error": 6.575882434844971e-05
+  }
+}

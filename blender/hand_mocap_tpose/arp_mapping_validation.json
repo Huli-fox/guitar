@@ -1,0 +1,19 @@
+{
+  "arm_geometry": {
+    "frames_checked": 600,
+    "minimum_left_right_x_gap_m": 0.28145042806863785,
+    "maximum_forearm_to_wrist_gap_m": 3.345302391148157e-07
+  },
+  "hands_mixamo_fk.bmap": {
+    "mapping_count": 33,
+    "root": "mixamorig:Hips",
+    "root_target": "c_root_master.x",
+    "all_target_bones_exist": true
+  },
+  "hands_mixamo_ik.bmap": {
+    "mapping_count": 33,
+    "root": "mixamorig:Hips",
+    "root_target": "c_root_master.x",
+    "all_target_bones_exist": true
+  }
+}

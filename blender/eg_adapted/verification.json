@@ -1,0 +1,10 @@
+{
+  "user_origin_rotation_rest_preserved": true,
+  "frames_checked": 600,
+  "max_saved_tip_target_error_m": 7.251600758547766e-07,
+  "max_bone_length_error_m": 2.7307761207850945e-07,
+  "max_chain_joint_gap_m": 3.379148385062387e-07,
+  "max_eg_string_landmark_error_m": 2.594323739891839e-07,
+  "fbx_max_position_error_m": 9.51408802652518e-07,
+  "fbx_max_matrix_component_error": 2.0772218704223633e-05
+}

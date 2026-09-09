@@ -1,0 +1,12 @@
+{
+  "frames_checked": 600,
+  "lean_degrees": 12,
+  "guitar_and_hands_forward_m": 0.16,
+  "max_saved_matrix_error": 1.0728836059570312e-06,
+  "max_arm_joint_gap_m": 2.6656007498500226e-07,
+  "min_arm_reach_margin_m": 0.16204008589468966,
+  "fbx_position_error_m": 1.0392424925662694e-06,
+  "fbx_matrix_error": 5.824863910675049e-05,
+  "hands_relative_to_guitar_preserved": true,
+  "original_object_transform_rest_hips_legs_preserved": true
+}

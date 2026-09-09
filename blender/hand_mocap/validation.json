@@ -1,0 +1,20 @@
+{
+  "baked_vs_source": {
+    "frames_checked": 600,
+    "max_position_error_m": 2.1648392417680676e-07,
+    "max_matrix_component_error": 4.470348358154297e-07
+  },
+  "bone_count": 32,
+  "fps": 60.0,
+  "frame_range": [
+    0,
+    599
+  ],
+  "rest_pose_source_frame": 0,
+  "standard": "Mixamo hand naming subset, not a full Mixamo rig",
+  "fbx_roundtrip_vs_source": {
+    "frames_checked": 600,
+    "max_position_error_m": 1.330012113825686e-06,
+    "max_matrix_component_error": 0.00024415552616119385
+  }
+}
