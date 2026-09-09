@@ -1,0 +1,234 @@
+[
+  {
+    "frame": 5,
+    "name": "Estimated note 0: [17, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 23,
+    "name": "Estimated note 1: [14, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 32,
+    "name": "Estimated note 2: [15, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 41,
+    "name": "Estimated note 3: [17, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 59,
+    "name": "Estimated note 4: [14, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 68,
+    "name": "Estimated note 5: [15, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 77,
+    "name": "Estimated note 6: [17, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 86,
+    "name": "Estimated note 7: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 95,
+    "name": "Estimated note 8: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 104,
+    "name": "Estimated note 9: [-1, -1, 18, -1, -1, -1]"
+  },
+  {
+    "frame": 113,
+    "name": "Estimated note 10: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 122,
+    "name": "Estimated note 11: [-1, 17, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 131,
+    "name": "Estimated note 12: [-1, 19, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 140,
+    "name": "Estimated note 13: [15, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 149,
+    "name": "Estimated note 14: [14, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 167,
+    "name": "Estimated note 15: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 176,
+    "name": "Estimated note 16: [-1, 17, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 185,
+    "name": "Estimated note 17: [14, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 203,
+    "name": "Estimated note 18: [-1, -1, -1, 16, -1, -1]"
+  },
+  {
+    "frame": 212,
+    "name": "Estimated note 19: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 221,
+    "name": "Estimated note 20: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 230,
+    "name": "Estimated note 21: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 239,
+    "name": "Estimated note 22: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 248,
+    "name": "Estimated note 23: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 257,
+    "name": "Estimated note 24: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 266,
+    "name": "Estimated note 25: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 275,
+    "name": "Estimated note 26: [-1, 14, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 284,
+    "name": "Estimated note 27: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 293,
+    "name": "Estimated note 28: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 311,
+    "name": "Estimated note 29: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 320,
+    "name": "Estimated note 30: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 329,
+    "name": "Estimated note 31: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 347,
+    "name": "Estimated note 32: [-1, -1, -1, 16, -1, -1]"
+  },
+  {
+    "frame": 356,
+    "name": "Estimated note 33: [-1, -1, -1, 14, -1, -1]"
+  },
+  {
+    "frame": 365,
+    "name": "Estimated note 34: [-1, -1, -1, 16, -1, -1]"
+  },
+  {
+    "frame": 374,
+    "name": "Estimated note 35: [-1, -1, -1, 14, -1, -1]"
+  },
+  {
+    "frame": 383,
+    "name": "Estimated note 36: [-1, -1, -1, -1, 17, -1]"
+  },
+  {
+    "frame": 392,
+    "name": "Estimated note 37: [-1, -1, -1, 14, -1, -1]"
+  },
+  {
+    "frame": 401,
+    "name": "Estimated note 38: [-1, -1, -1, 16, -1, -1]"
+  },
+  {
+    "frame": 410,
+    "name": "Estimated note 39: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 419,
+    "name": "Estimated note 40: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 428,
+    "name": "Estimated note 41: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 437,
+    "name": "Estimated note 42: [-1, -1, -1, 17, -1, -1]"
+  },
+  {
+    "frame": 455,
+    "name": "Estimated note 43: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 464,
+    "name": "Estimated note 44: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 473,
+    "name": "Estimated note 45: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 491,
+    "name": "Estimated note 46: [-1, 14, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 500,
+    "name": "Estimated note 47: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 509,
+    "name": "Estimated note 48: [-1, -1, 14, -1, -1, -1]"
+  },
+  {
+    "frame": 518,
+    "name": "Estimated note 49: [-1, -1, 16, -1, -1, -1]"
+  },
+  {
+    "frame": 527,
+    "name": "Estimated note 50: [-1, -1, 18, -1, -1, -1]"
+  },
+  {
+    "frame": 536,
+    "name": "Estimated note 51: [-1, 15, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 545,
+    "name": "Estimated note 52: [-1, 17, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 554,
+    "name": "Estimated note 53: [-1, 19, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 563,
+    "name": "Estimated note 54: [14, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 572,
+    "name": "Estimated note 55: [15, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 581,
+    "name": "Estimated note 56: [17, -1, -1, -1, -1, -1]"
+  },
+  {
+    "frame": 599,
+    "name": "Estimated note 57: [14, -1, -1, -1, -1, -1]"
+  }
+]
